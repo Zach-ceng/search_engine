@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>搜索本地文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+ 
+        body {
+            background: #f0f2f5;
+            padding: 2rem;
+        }
+ 
+        .results-container {
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+ 
+        .result-item {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+ 
+        .result-item:hover {
+            transform: translateX(5px);
+        }
+ 
+        .result-title {
+            color: #1a73e8;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+        }
+ 
+        .result-content {
+            color: #444;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+ 
+        .highlight {
+            background: #fff5b1;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+ 
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        {% if results %}
+            {% for hit in results %}
+            <div class="result-item">
+                <h3 class="result-title">{{ hit._source.title }}</h3>
+                <p class="result-content">
+                    {% if hit.highlight.content %}
+                        {{ hit.highlight.content[0]|replace('<em>', '<span class="highlight">')|replace('</em>', '</span>')|safe }}
+                    {% else %}
+                        {{ hit._source.content[:300] + '...' }}
+                    {% endif %}
+                </p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                😢 没有找到与 "{{ query }}" 相关的结果
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>搜索本地文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            padding: 2rem;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 3;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            min-width: 250px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #409eff;
+            box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.1);
+        }
+
+        .lang-select {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            min-width: 150px;
+        }
+
+        .search-btn {
+            background: #409eff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .search-btn:hover {
+            background: #66b1ff;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(64, 158, 255, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .search-form {
+                flex-direction: column;
+            }
+            .search-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <form action="/search" class="search-form">
+            <input type="text" name="q" placeholder="输入关键词" class="search-input"
+                   value="{{ query if query else '' }}">
+            <select name="lang" class="lang-select">
+                <option value="chinese" {% if lang == 'chinese' %}selected{% endif %}>中文</option>
+                <option value="english" {% if lang == 'english' %}selected{% endif %}>English</option>
+            </select>
+            <button type="submit" class="search-btn">🔍 搜索</button>
+        </form>
+    </div>
+</body>
+</html>
